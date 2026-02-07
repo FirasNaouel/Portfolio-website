@@ -49,3 +49,22 @@ The contact form posts to Web3Forms using the action URL and access key in index
 - Typed.js: https://github.com/mattboldt/typed.js/
 - Font Awesome: https://fontawesome.com/
 - Web3Forms: https://web3forms.com/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+FIRAS IS THE GOAT
+
