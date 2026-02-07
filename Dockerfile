@@ -6,9 +6,11 @@ COPY nginx.conf /etc/nginx/nginx.conf
 
 COPY . /usr/share/nginx/html
 
-RUN addgroup --system nginxgroup && adduser --system --ingroup nginxgroup nginxuser
+RUN groupadd -r nginxgroup && useradd -r -g nginxgroup -s /sbin/nologin nginxuser
 
-RUN chown -R nginxuser:nginxgroup /usr/share/nginx/html /var/cache/nginx /var/run
+RUN chown -R nginxuser:nginxgroup /usr/share/nginx/html /var/cache/nginx /var/run /etc/nginx
+
+ENTRYPOINT []
 
 USER nginxuser
 
