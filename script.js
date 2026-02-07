@@ -126,56 +126,6 @@ function initSmoothScroll() {
     });
 }
 
-// Form validation
-function initFormValidation() {
-    const contactForm = document.getElementById('contact-form');
-    
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Simple validation
-            const name = document.getElementById('name');
-            const email = document.getElementById('email');
-            const message = document.getElementById('message');
-            let isValid = true;
-            
-            // Reset error states
-            [name, email, message].forEach(field => {
-                field.classList.remove('error');
-            });
-            
-            // Validate name
-            if (!name.value.trim()) {
-                name.classList.add('error');
-                isValid = false;
-            }
-            
-            // Validate email
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!email.value.trim() || !emailPattern.test(email.value)) {
-                email.classList.add('error');
-                isValid = false;
-            }
-            
-            // Validate message
-            if (!message.value.trim()) {
-                message.classList.add('error');
-                isValid = false;
-            }
-            
-            if (isValid) {
-                // Show success message (in production, this would submit the form)
-                const formResponse = document.createElement('div');
-                formResponse.classList.add('form-response', 'success');
-                formResponse.textContent = 'Your message has been sent successfully!';
-                
-                contactForm.innerHTML = '';
-                contactForm.appendChild(formResponse);
-            }
-        });
-    }
-}
 
 // Reveal animations when scrolling
 const revealElements = document.querySelectorAll('.reveal');
