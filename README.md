@@ -1,7 +1,5 @@
 # Portfolio Website
 
-A personal portfolio site for Firas Naouel, focused on cybersecurity and software development. It includes a hero section with typed text, skills, projects, and a contact section with a form submission service.
-
 ## Features
 
 - Responsive, mobile-first layout
@@ -51,7 +49,3 @@ The contact form posts to Web3Forms using the action URL and access key in index
 - Typed.js: https://github.com/mattboldt/typed.js/
 - Font Awesome: https://fontawesome.com/
 - Web3Forms: https://web3forms.com/
-
-## License
-
-This project is for personal use. Add a license if you plan to distribute it.
