@@ -50,21 +50,7 @@ The contact form posts to Web3Forms using the action URL and access key in index
 - Font Awesome: https://fontawesome.com/
 - Web3Forms: https://web3forms.com/
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+## Shoutouts from friends
 
 FIRAS IS THE GOAT
 
