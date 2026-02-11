@@ -47,11 +47,17 @@ jobs:
         with:
           version: 'v1.29.15'
 
+      - name: Setup Kubeconfig
+        run: |
+          echo "${{ secrets.KUBECONFIG }}" > $GITHUB_WORKSPACE/kubeconfig
+          export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
+
       - name: Deploy to Kubernetes
         env:
           KUBECONFIG: ${{ secrets.KUBECONFIG }}
         run: |
-          kubectl set image deployment/nginx nginx=${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LC }}:${{ github.sha }} --record
+          export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
+          kubectl set image deployment/nginx nginx=${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LC }}:${{ github.sha }}
           kubectl rollout status deployment/nginx
 
 
