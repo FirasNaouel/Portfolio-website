@@ -42,22 +42,22 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LC }}:${{ github.sha }}
 
-      - name: Set up kubectl
-        uses: azure/setup-kubectl@v3
-        with:
-          version: 'v1.29.15'
-
       - name: Setup Kubeconfig
         run: |
+          # Write the KUBECONFIG secret to a file
           echo "${{ secrets.KUBECONFIG }}" > $GITHUB_WORKSPACE/kubeconfig
           export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
+          echo "KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig" >> $GITHUB_ENV
 
       - name: Deploy to Kubernetes
-        env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
         run: |
+          # Make sure KUBECONFIG is set
           export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
+
+          # Update the deployment with the new image
           kubectl set image deployment/nginx nginx=${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LC }}:${{ github.sha }}
+
+          # Wait for rollout to finish
           kubectl rollout status deployment/nginx
 
 
