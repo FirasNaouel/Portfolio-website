@@ -42,15 +42,6 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LC }}:${{ github.sha }}
 
-      - name: Deploy to Kubernetes
-        run: |
-          mkdir -p $HOME/.kube
-          echo "$KUBECONFIG" | base64 --decode > $HOME/.kube/config
-          kubectl set image deployment/nginx nginx=${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LC }}:${{ github.sha }}
-          kubectl rollout status deployment/nginx
-        env:
-          KUBECONFIG: ${{ secrets.KUBECONFIG }}
-
 
 
 
