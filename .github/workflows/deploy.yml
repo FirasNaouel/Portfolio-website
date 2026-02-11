@@ -1,4 +1,4 @@
-name: Build and Push Docker Image
+name: Build, Push and Deploy Docker Image
 
 on:
   push:
@@ -42,23 +42,14 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LC }}:${{ github.sha }}
 
-      - name: Setup Kubeconfig
-        run: |
-          # Write the KUBECONFIG secret to a file
-          echo "${{ secrets.KUBECONFIG }}" > $GITHUB_WORKSPACE/kubeconfig
-          export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
-          echo "KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig" >> $GITHUB_ENV
-
       - name: Deploy to Kubernetes
         run: |
-          # Make sure KUBECONFIG is set
-          export KUBECONFIG=$GITHUB_WORKSPACE/kubeconfig
-
-          # Update the deployment with the new image
-          kubectl set image deployment/nginx nginx=${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LC }}:${{ github.sha }}
-
-          # Wait for rollout to finish
+          echo "$KUBECONFIG" | base64 -d > $HOME/.kube/config
+          kubectl set image deployment/nginx nginx=${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LC }}:${{ github.sha }} --record
           kubectl rollout status deployment/nginx
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+
 
 
 
