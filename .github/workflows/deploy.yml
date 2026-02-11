@@ -42,6 +42,18 @@ jobs:
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LC }}:${{ github.sha }}
 
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'v1.29.15'
+
+      - name: Deploy to Kubernetes
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        run: |
+          kubectl set image deployment/nginx nginx=${{ env.REGISTRY }}/${{ env.IMAGE_NAME_LC }}:${{ github.sha }} --record
+          kubectl rollout status deployment/nginx
+
 
 
 
